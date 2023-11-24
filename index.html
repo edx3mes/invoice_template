@@ -7,8 +7,9 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
-		<script type="text/javascript" src="jquery.min.js"></script>
-		<script type="text/javascript" src="qrcode.js"></script>
+		<script type="text/javascript" src="./js/qrcode.js"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+		<!-- <script type="text/javascript" src="./jquery.min.js"></script> -->
 	</head>
 	<body style="padding: 10px;">
 		<table class="table" style="border-collapse: collapse; width: 100%; height: 83px;">
@@ -45,7 +46,8 @@
 						<p>(809)-555-3333</p>
 					</td>
 					<td style="width: 50%; height: 30px;" colspan="2" rowspan="2">
-						<div id="qrcode" style="width:100px; height:100px; margin-top:15px;"></div>
+						<input id="qr_code" type="hidden"></div>
+						<div id="qrcode" style="width:100%; height:100%;"></div>
 					</td>
 				</tr>
 				<tr></tr>
@@ -111,13 +113,16 @@
 			console.log(element);
 		</script>
 		<script type="text/javascript">
-			const invoice_id = Math.random();
-			var qrcode = new QRCode(invoice_id, {
+			// const invoice_id = Math.random();
+			var qrcode = new QRCode(document.getElementById("qrcode"), {
 				width : 100,
 				height : 100
 			});
 			function makeCode () {		
-				var elText = document.getElementById("text");
+				const invoice_id = parseInt(Math.random() * (10000000 - 0) + 0);
+				console.log('invoice_id',invoice_id);
+				document.getElementById("qr_code").value = invoice_id;
+				var elText = document.getElementById("qr_code");
 				if (!elText.value) {
 					alert("Input a text");
 					elText.focus();
